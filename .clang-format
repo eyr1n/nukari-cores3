@@ -1,0 +1,12 @@
+BasedOnStyle: LLVM
+ColumnLimit: 120
+IncludeBlocks: Regroup
+IncludeCategories:
+  - Regex: '^<[^.]*>$'
+    Priority: 1
+  - Regex: '^<(AIVoiceClient|AudioFileSourceHTTPClient|AudioOutputM5Speaker|BufferedMic|GeminiClient)\.h>$'
+    Priority: 3
+  - Regex: '^<.*>$'
+    Priority: 2
+  - Regex: '^"'
+    Priority: 4
