@@ -14,7 +14,7 @@
 
 namespace {
 
-constexpr char AIVOICE_PRESET[] = "結月 ゆかり";
+constexpr char AIVOICE_VOICE[] = "yukari_emo_48";
 constexpr uint32_t SAMPLE_RATE = 24000;
 constexpr size_t BUFFER_SIZE = 2 * SAMPLE_RATE * sizeof(int16_t);
 constexpr uint32_t SILENCE_MS = 100;
@@ -46,15 +46,12 @@ void Speech::begin() {
 std::unique_ptr<AudioFileSource> Speech::synthesize(const char *text, float joy, float anger, float sorrow) {
   JsonDocument request;
   request["text"] = text;
-  request["preset"]["PresetName"] = AIVOICE_PRESET;
+  request["voice"] = AIVOICE_VOICE;
   request["sample_rate"] = SAMPLE_RATE;
-  JsonArray styles = request["preset"]["Styles"].to<JsonArray>();
-  styles[0]["Name"] = "J";
-  styles[0]["Value"] = joy;
-  styles[1]["Name"] = "A";
-  styles[1]["Value"] = anger;
-  styles[2]["Name"] = "S";
-  styles[2]["Value"] = sorrow;
+  JsonObject styles = request["parameters"]["styles"].to<JsonObject>();
+  styles["J"] = joy;
+  styles["A"] = anger;
+  styles["S"] = sorrow;
 
   AIVoiceClient aivoice(CF_ACCESS_CLIENT_ID, CF_ACCESS_CLIENT_SECRET);
   auto source = aivoice.synthesize(request);

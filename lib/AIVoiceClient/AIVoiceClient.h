@@ -19,8 +19,7 @@ public:
 
   AIVoiceClient(const char *client_id, const char *client_secret);
 
-  tl::expected<JsonDocument, Error> getPresets();
-  tl::expected<JsonDocument, Error> getPreset(const String &name);
+  tl::expected<JsonDocument, Error> getVoices();
   tl::expected<std::unique_ptr<AudioFileSource>, Error> synthesize(JsonVariantConst request);
 
 private:

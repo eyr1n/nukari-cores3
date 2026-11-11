@@ -4,7 +4,6 @@
 
 #include <HTTPClient.h>
 #include <NetworkClientSecure.h>
-#include <UrlEncode.h>
 
 #include <AudioFileSourceHTTPClient.h>
 
@@ -18,11 +17,7 @@ constexpr uint16_t TIMEOUT_MS = 30000;
 AIVoiceClient::AIVoiceClient(const char *client_id, const char *client_secret)
     : client_id_(client_id), client_secret_(client_secret) {}
 
-tl::expected<JsonDocument, AIVoiceClient::Error> AIVoiceClient::getPresets() { return getJson("/presets"); }
-
-tl::expected<JsonDocument, AIVoiceClient::Error> AIVoiceClient::getPreset(const String &name) {
-  return getJson("/presets/" + urlEncode(name));
-}
+tl::expected<JsonDocument, AIVoiceClient::Error> AIVoiceClient::getVoices() { return getJson("/voices"); }
 
 tl::expected<std::unique_ptr<AudioFileSource>, AIVoiceClient::Error>
 AIVoiceClient::synthesize(JsonVariantConst request) {
